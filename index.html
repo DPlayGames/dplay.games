@@ -32,8 +32,8 @@
 		<script src="/UPPERCASE-CORE/BROWSER.js"></script>
 		<!-- BOX -->
 		<script>global.oldWeb3 = global.web3;</script>
-		<script>BOX('Contract2Object');</script>
-		<script src="/BOX/Contract2Object/BROWSER.js"></script>
+		<script>BOX('SmartContract');</script>
+		<script src="/BOX/SmartContract/BROWSER.js"></script>
 		<script>BOX('UUI');</script>
 		<script src="/BOX/UUI/BROWSER.js"></script>
 		<script>BOX('UANI');</script>
@@ -45,20 +45,31 @@
 		<script>
 		RUN(() => {
 			
-			CONFIG.defaultBoxName = 'DPlayGames';
+			let isUsingOldWeb3;
+			if (global.oldWeb3 !== undefined) {
+				global.web3 = global.oldWeb3;
+				global.SmartContract = SmartContractForOldWeb3;
+				isUsingOldWeb3 = true;
+			}
 			
-			FOR_BOX((box) => {
-				if (box.OVERRIDE !== undefined) {
-					box.OVERRIDE();
-				}
-			});
-		
-			INIT_OBJECTS();
-		
-			FOR_BOX((box) => {
-				if (box.MAIN !== undefined) {
-					box.MAIN();
-				}
+			SmartContract.getEthereumNetworkName((ethereumNetworkName) => {
+				
+				CONFIG.defaultBoxName = 'DPlayGames';
+				CONFIG.ethereumNetworkName = ethereumNetworkName;
+				
+				FOR_BOX((box) => {
+					if (box.OVERRIDE !== undefined) {
+						box.OVERRIDE();
+					}
+				});
+			
+				INIT_OBJECTS();
+			
+				FOR_BOX((box) => {
+					if (box.MAIN !== undefined) {
+						box.MAIN();
+					}
+				});
 			});
 		});
 		</script>
