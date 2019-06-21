@@ -11,47 +11,76 @@ DPlayGames.Layout = OBJECT({
 		
 		DIV({
 			style : {
-				height : 800
+				height : 1000
 			},
 			c : [
 			// 태그 목록
 			DIV({
 				style : {
 					flt : 'left',
-					width : 300,
+					width : 200,
 					height : '100%',
 					backgroundColor : 'rgba(0, 0, 0, 0.4)'
 				},
-				c : [A({
+				c : [H1({
 					style : {
-						position : 'absolute',
-						marginTop : 50,
-						marginLeft : 40
+						marginTop : 30,
+						marginLeft : 25
 					},
-					c : IMG({
-						src : '/DPlayGames/R/logo.png'
-					}),
-					on : {
-						tap : () => {
-							DPlayGames.GO('');
+					c : A({
+						c : IMG({
+							style : {
+								width : 109
+							},
+							src : '/DPlayGames/R/logo.png'
+						}),
+						on : {
+							tap : () => {
+								DPlayGames.GO('');
+							}
 						}
-					}
+					})
 				}),
 				
-				tagList = DIV()]
-			}), CLEAR_BOTH(),
+				tagList = UL({
+					style : {
+						marginTop : 40,
+						marginLeft : 25
+					},
+					c : [LI({
+						style : {
+							marginBottom : 20,
+							fontWeight : 'bold',
+							color : '#c40000'
+						},
+						c : '태그'
+					})]
+				})]
+			}),
 			
 			// 내용
-			contentWrapper = DIV(),
+			contentWrapper = DIV({
+				style : {
+					flt : 'left',
+					onDisplayResize : (width) => {
+						return {
+							width : width - 200
+						};
+					}
+				}
+			}), CLEAR_BOTH(),
 			
 			// 우측 상단 메뉴 버튼
 			A({
 				style : {
 					position : 'absolute',
-					right : 30,
-					top : 30
+					right : 40,
+					top : 40
 				},
 				c : IMG({
+					style : {
+						width : 15
+					},
 					src : '/DPlayGames/R/menubutton.png'
 				}),
 				on : {
@@ -61,6 +90,39 @@ DPlayGames.Layout = OBJECT({
 				}
 			})]
 		}).appendTo(BODY);
+		
+		[
+			'전체',
+			'전략 시뮬레이션',
+			'FPS',
+			'고양이',
+			'스포츠',
+			'시뮬레이션',
+			'레이싱',
+			'인디',
+			'캐주얼',
+			'MMORPG',
+			'시뮬레이션',
+			'FPS',
+			'고양이',
+			'스포츠',
+			'시뮬레이션',
+			'레이싱',
+			'인디',
+			'캐주얼',
+			'RPG'
+		].forEach((tag) => {
+			
+			tagList.append(LI({
+				style : {
+					marginTop : 10,
+					color : '#efece9'
+				},
+				c : A({
+					c : tag
+				})
+			}));
+		});
 		
 		let menu;
 		
