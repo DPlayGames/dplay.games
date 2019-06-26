@@ -129,7 +129,7 @@ DPlayGames.Layout = OBJECT({
 		// 우측 상단 메뉴를 열거나 닫습니다.
 		let toggleMenu = self.toggleMenu = () => {
 			
-			if (menu !== undefined) {
+			let hideMenu = () => {
 				
 				UANI.HIDE_SLIDE_UP({
 					node : menu
@@ -137,6 +137,10 @@ DPlayGames.Layout = OBJECT({
 					menu.remove();
 					menu = undefined;
 				});
+			};
+			
+			if (menu !== undefined) {
+				hideMenu();
 			}
 			
 			else {
@@ -170,6 +174,7 @@ DPlayGames.Layout = OBJECT({
 							on : {
 								tap : () => {
 									DPlayGames.GO(menuInfo.uri);
+									hideMenu();
 								}
 							}
 						})

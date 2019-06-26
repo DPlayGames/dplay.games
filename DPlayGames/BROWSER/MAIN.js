@@ -17,9 +17,28 @@ DPlayGames.MAIN = METHOD({
 		style.innerHTML = 'input[type="range"]::-webkit-slider-thumb { width:30px; height:30px; } * { font-family:\'Nanum Myeongjo\', serif; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; user-drag:none; -webkit-user-drag:none; } input, textarea { user-select:auto; -webkit-user-select:auto; }';
 		document.getElementsByTagName('head')[0].appendChild(style);
 		
-		DPlayGames.MATCH_VIEW({
-			uri : '',
-			target : DPlayGames.Home
+		MSG.loadCSV(DPlayGames.R('text.csv'), () => {
+			
+			DPlayGames.MATCH_VIEW({
+				uri : '**',
+				target : DPlayGames.Layout
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : '**',
+				excludeURI : ['game/new', 'game/{gameId}/update'],
+				target : DPlayGames.TagListLayout
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : '',
+				target : DPlayGames.Home
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : 'game/new',
+				target : DPlayGames.NewGame
+			});
 		});
 	}
 });
