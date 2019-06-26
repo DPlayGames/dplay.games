@@ -140,7 +140,7 @@ DPlayGames.Home = CLASS({
 		});
 		newGameList.append(CLEAR_BOTH());
 		
-		DPlayGames.Layout.setContent(content);
+		DPlayGames.TagListLayout.setContent(content);
 		
 		inner.on('close', () => {
 			content.remove();

@@ -14,10 +14,10 @@ DPlayGames.MAIN = METHOD({
 		
 		let style = document.createElement('style');
 		style.type = 'text/css';
-		style.innerHTML = 'input[type="range"]::-webkit-slider-thumb { width:30px; height:30px; } * { font-family:\'Nanum Myeongjo\', serif; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; user-drag:none; -webkit-user-drag:none; } input, textarea { user-select:auto; -webkit-user-select:auto; }';
+		style.innerHTML = 'input[type="range"]::-webkit-slider-thumb { width:30px; height:30px; } * { font-family:\'Nanum Myeongjo\'; -webkit-tap-highlight-color:transparent; } input, textarea { user-select:auto; -webkit-user-select:auto; }';
 		document.getElementsByTagName('head')[0].appendChild(style);
 		
-		MSG.loadCSV(DPlayGames.R('text.csv'), () => {
+		MSG.loadCSV('/DPlayGames/R/text.csv', () => {
 			
 			DPlayGames.MATCH_VIEW({
 				uri : '**',
