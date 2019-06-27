@@ -100,6 +100,12 @@ DPlayGames.Layout = CLASS((cls) => {
 					}).appendTo(BODY);
 					
 					EACH([{
+						title : '내 게임',
+						uri : 'mygames'
+					}, {
+						title : '내 정보',
+						uri : 'me'
+					}, {
 						title : '새 게임 등록',
 						uri : 'game/new'
 					}], (menuInfo, index) => {
@@ -107,7 +113,8 @@ DPlayGames.Layout = CLASS((cls) => {
 						menu.append(LI({
 							style : {
 								border : '1px solid #666',
-								backgroundColor : '#333'
+								backgroundColor : '#333',
+								marginBottom : -1
 							},
 							c : A({
 								style : {

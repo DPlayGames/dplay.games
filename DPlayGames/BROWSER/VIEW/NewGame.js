@@ -83,8 +83,20 @@ DPlayGames.NewGame = CLASS({
 						
 						let gameData = form.getData();
 						
+						// 실제 가격 환산
+						gameData.price = DPlayCoinContract.getActualPrice(gameData.price);
+						
 						DPlayStoreContract.newGame(gameData, () => {
-							console.log('test');
+							
+							SmartContract.getWalletAddress((walletAddress) => {
+								
+								// 가장 최신의 게임 ID를 가져옵니다.
+								DPlayStoreContract.getPublishedGameIds(walletAddress, (gameIds) => {
+									
+									// 상세 정보 입력 화면으로 이동
+									DPlayGames.GO('game/' + gameIds[gameIds.length - 1] + '/details');
+								});
+							});
 						});
 					}
 				}

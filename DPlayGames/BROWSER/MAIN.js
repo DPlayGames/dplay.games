@@ -26,7 +26,7 @@ DPlayGames.MAIN = METHOD({
 			
 			DPlayGames.MATCH_VIEW({
 				uri : '**',
-				excludeURI : ['game/new', 'game/{gameId}/update'],
+				excludeURI : ['me', 'user/**', 'game/**'],
 				target : DPlayGames.TagListLayout
 			});
 			
@@ -36,8 +36,28 @@ DPlayGames.MAIN = METHOD({
 			});
 			
 			DPlayGames.MATCH_VIEW({
+				uri : 'me',
+				target : DPlayGames.Me
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : 'user/{address}',
+				target : DPlayGames.User
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : 'mygames',
+				target : DPlayGames.MyGames
+			});
+			
+			DPlayGames.MATCH_VIEW({
 				uri : 'game/new',
 				target : DPlayGames.NewGame
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : 'game/{gameId}/details',
+				target : DPlayGames.GameDetails
 			});
 		});
 	}

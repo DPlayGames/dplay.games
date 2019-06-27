@@ -1,4 +1,4 @@
-DPlayGames.SetGameDetails = CLASS({
+DPlayGames.GameDetails = CLASS({
 
 	preset : () => {
 		return VIEW;
