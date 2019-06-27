@@ -78,12 +78,23 @@ DPlayGames.Home = CLASS({
 			});
 		};
 		
-		REPEAT(5, () => {
-			goodGameList.append(createGameItem());
+		DPlayStoreSearchContract.getGameIdsByRating(100, (gameIds) => {
+			console.log(gameIds);
 		});
 		
-		REPEAT(10, () => {
-			newGameList.append(createGameItem());
+		DPlayStoreSearchContract.getGameIdsNewest((gameIds) => {
+			
+			EACH(gameIds, (gameId) => {
+				
+				newGameList.append(DPlayGames.GameInfoPanel({
+					style : {
+						flt : 'left',
+						marginRight : 10,
+						marginBottom : 30
+					},
+					gameId : gameId
+				}));
+			});
 		});
 		
 		DPlayGames.TagListLayout.setContent(content);

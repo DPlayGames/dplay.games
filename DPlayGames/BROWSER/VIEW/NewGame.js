@@ -93,8 +93,8 @@ DPlayGames.NewGame = CLASS({
 								// 가장 최신의 게임 ID를 가져옵니다.
 								DPlayStoreContract.getPublishedGameIds(walletAddress, (gameIds) => {
 									
-									// 상세 정보 입력 화면으로 이동
-									DPlayGames.GO('game/' + gameIds[gameIds.length - 1] + '/details');
+									// 게임 정보 화면으로 이동
+									DPlayGames.GO('game/' + gameIds[gameIds.length - 1]);
 								});
 							});
 						});

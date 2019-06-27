@@ -56,8 +56,19 @@ DPlayGames.MAIN = METHOD({
 			});
 			
 			DPlayGames.MATCH_VIEW({
+				uri : 'game/{gameId}',
+				excludeURI : 'game/new',
+				target : DPlayGames.Game
+			});
+			
+			DPlayGames.MATCH_VIEW({
 				uri : 'game/{gameId}/details',
-				target : DPlayGames.GameDetails
+				target : DPlayGames.SetGameDetails
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : 'game/{gameId}/tags',
+				target : DPlayGames.SetGameTags
 			});
 		});
 	}

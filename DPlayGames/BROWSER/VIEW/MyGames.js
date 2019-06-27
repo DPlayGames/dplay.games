@@ -48,12 +48,7 @@ DPlayGames.MyGames = CLASS({
 							marginRight : 10,
 							marginBottom : 30
 						},
-						title : title,
-						on : {
-							tap : () => {
-								DPlayGames.GO('game/' + gameId + '/details');
-							}
-						}
+						gameId : gameId
 					}));
 				};
 				
