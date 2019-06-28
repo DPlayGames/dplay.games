@@ -114,7 +114,7 @@ DPlayGames.Layout = CLASS((cls) => {
 							style : {
 								border : '1px solid #666',
 								backgroundColor : '#333',
-								marginBottom : -1
+								marginTop : -1
 							},
 							c : A({
 								style : {
@@ -136,6 +136,11 @@ DPlayGames.Layout = CLASS((cls) => {
 					
 					UANI.SHOW_SLIDE_DOWN({
 						node : menu
+					}, () => {
+						
+						EVENT_ONCE('tap', () => {
+							hideMenu();
+						});
 					});
 				}
 			};
