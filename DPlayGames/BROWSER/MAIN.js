@@ -26,7 +26,7 @@ DPlayGames.MAIN = METHOD({
 			
 			DPlayGames.MATCH_VIEW({
 				uri : '**',
-				excludeURI : ['me', 'user/**', 'game/**'],
+				excludeURI : ['me', 'user/**', 'mygames', 'game/**'],
 				target : DPlayGames.TagListLayout
 			});
 			
