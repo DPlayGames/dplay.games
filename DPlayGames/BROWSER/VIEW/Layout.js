@@ -64,85 +64,60 @@ DPlayGames.Layout = CLASS((cls) => {
 					}),
 					on : {
 						tap : () => {
-							toggleMenu();
+							openMenu();
 						}
 					}
 				})]
 			}).appendTo(BODY);
 			
-			let menu;
-			
-			// 우측 상단 메뉴를 열거나 닫습니다.
-			let toggleMenu = self.toggleMenu = () => {
+			let openMenu = self.openMenu = () => {
 				
-				let hideMenu = () => {
+				let menu = UL({
+					style : {
+						position : 'absolute',
+						right : 30,
+						top : 70
+					}
+				}).appendTo(BODY);
+				
+				EACH([{
+					title : '내 게임',
+					uri : 'mygames'
+				}, {
+					title : '내 정보',
+					uri : 'me'
+				}, {
+					title : '새 게임 등록',
+					uri : 'game/new'
+				}], (menuInfo, index) => {
 					
-					UANI.HIDE_SLIDE_UP({
-						node : menu
-					}, () => {
-						menu.remove();
-						menu = undefined;
-					});
-				};
-				
-				if (menu !== undefined) {
-					hideMenu();
-				}
-				
-				else {
-					
-					menu = UL({
+					menu.append(LI({
 						style : {
-							position : 'absolute',
-							right : 30,
-							top : 70
-						}
-					}).appendTo(BODY);
-					
-					EACH([{
-						title : '내 게임',
-						uri : 'mygames'
-					}, {
-						title : '내 정보',
-						uri : 'me'
-					}, {
-						title : '새 게임 등록',
-						uri : 'game/new'
-					}], (menuInfo, index) => {
-						
-						menu.append(LI({
+							border : '1px solid #666',
+							backgroundColor : '#333',
+							marginTop : -1
+						},
+						c : A({
 							style : {
-								border : '1px solid #666',
-								backgroundColor : '#333',
-								marginTop : -1
+								width : 150,
+								display : 'block',
+								padding : 10,
+								textAlign : 'center'
 							},
-							c : A({
-								style : {
-									width : 150,
-									display : 'block',
-									padding : 10,
-									textAlign : 'center'
-								},
-								c : menuInfo.title,
-								on : {
-									tap : () => {
-										DPlayGames.GO(menuInfo.uri);
-										hideMenu();
-									}
+							c : menuInfo.title,
+							on : {
+								touchstart : () => {
+									DPlayGames.GO(menuInfo.uri);
+									hideMenu();
 								}
-							})
-						}));
-					});
-					
-					UANI.SHOW_SLIDE_DOWN({
-						node : menu
-					}, () => {
-						
-						EVENT_ONCE('tap', () => {
-							hideMenu();
-						});
-					});
-				}
+							}
+						})
+					}));
+				});
+				
+				EVENT_ONCE('touchstart', () => {
+					menu.remove();
+				});
 			};
 			
 			inner.on('close', () => {
