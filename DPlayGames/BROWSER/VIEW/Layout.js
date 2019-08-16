@@ -108,7 +108,6 @@ DPlayGames.Layout = CLASS((cls) => {
 							on : {
 								touchstart : () => {
 									DPlayGames.GO(menuInfo.uri);
-									hideMenu();
 								}
 							}
 						})
