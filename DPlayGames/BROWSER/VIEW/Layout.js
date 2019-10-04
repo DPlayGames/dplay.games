@@ -17,7 +17,7 @@ DPlayGames.Layout = CLASS((cls) => {
 			
 			let layout = DIV({
 				style : {
-					backgroundImage : '/DPlayGames/R/background.png',
+					backgroundImage : '/DPlayGames/R/background.jpg',
 					position : 'relative'
 				},
 				c : [

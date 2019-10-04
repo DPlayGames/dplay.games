@@ -25,7 +25,7 @@ DPlayGames.TagListLayout = CLASS((cls) => {
 						top : 0,
 						width : 200,
 						height : '100%',
-						backgroundImage : '/DPlayGames/R/background.png',
+						backgroundImage : '/DPlayGames/R/background.jpg',
 						overflowY : 'auto'
 					},
 					contentStyle : {
