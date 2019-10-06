@@ -60,18 +60,18 @@ DPlayGames.SetGameTags = CLASS({
 						
 						gameTagsData.gameId = gameId;
 						
-						DPlayStoreSearchContract.setGameTags(gameTagsData, () => {
+						/*DPlayStoreSearchContract.setGameTags(gameTagsData, () => {
 							
 							// 게임 정보 화면으로 이동
 							DPlayGames.GO('game/' + gameId);
-						});
+						});*/
 					}
 				}
 			}));
 			
 			let loadGameTags = (language) => {
 				
-				DPlayStoreSearchContract.getGameTags({
+				/*DPlayStoreSearchContract.getGameTags({
 					gameId : gameId,
 					language : INFO.getLang()
 				}, (tag1, tag2, tag3, tag4) => {
@@ -83,7 +83,7 @@ DPlayGames.SetGameTags = CLASS({
 						tag3 : tag3,
 						tag4 : tag4
 					});
-				});
+				});*/
 			};
 			
 			loadGameTags(INFO.getLang());

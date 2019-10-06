@@ -78,7 +78,7 @@ DPlayGames.Home = CLASS({
 			});
 		};
 		
-		DPlayStoreSearchContract.getGameIdsByRating(100, (gameIds) => {
+		/*DPlayStoreSearchContract.getGameIdsByRating(100, (gameIds) => {
 			console.log(gameIds);
 		});
 		
@@ -95,7 +95,7 @@ DPlayGames.Home = CLASS({
 					gameId : gameId
 				}));
 			});
-		});
+		});*/
 		
 		DPlayGames.TagListLayout.setContent(content);
 		
