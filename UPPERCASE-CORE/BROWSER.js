@@ -6680,8 +6680,8 @@ global.INFO = OBJECT({
 				lang = navigator.language;
 			}
 			
-			if (lang !== 'zh-TW' && lang !== 'zh-CN') {
-				lang = lang.substring(0, 2);
+			if (lang.indexOf('-') !== -1 && lang !== 'zh-TW' && lang !== 'zh-CN') {
+				lang = lang.substring(0, lang.indexOf('-'));
 			}
 
 			return lang;
@@ -6901,7 +6901,7 @@ OVERRIDE(MSG, (origin) => {
 						else {
 							let subData = {};
 							EACH(texts, (text, j) => {
-								if (j > 0) {
+								if (j > 0 && text !== '') {
 									subData[langs[j]] = text.replace(/\\n/, '\n');
 								}
 							});
@@ -8837,9 +8837,13 @@ global.E = CLASS({
 		let getKey = self.getKey = () => {
 			return e.key;
 		};
+
+		let getButtonIndex = self.getButtonIndex = () => {
+			return e.button;
+		};
 		
 		let getWheelDelta = self.getWheelDelta = () => {
-			return e.deltaY;
+			return e.deltaY * (INFO.getBrowserName() === 'Firefox' ? 33 : 1);
 		};
 		
 		let getGamePadData = self.getGamePadData = () => {
@@ -10305,6 +10309,7 @@ global.INPUT = CLASS((cls) => {
 			let select;
 			let focus;
 			let blur;
+			let setPlaceholder;
 			
 			let toggleCheck;
 			let checkIsChecked;
@@ -10443,6 +10448,20 @@ global.INPUT = CLASS((cls) => {
 							});
 						}
 					});
+				}
+				
+				else {
+					
+					setPlaceholder = self.setPlaceholder = (_placeholder) => {
+						//REQUIRED: placeholder
+						
+						placeholder = _placeholder;
+						
+						inner.setAttr({
+							name : 'placeholder',
+							value : placeholder
+						});
+					};
 				}
 			}
 			
@@ -11087,6 +11106,17 @@ global.TEXTAREA = CLASS({
 		let blur = self.blur = () => {
 			self.getEl().blur();
 		};
+		
+		let setPlaceholder = self.setPlaceholder = (_placeholder) => {
+			//REQUIRED: placeholder
+			
+			placeholder = _placeholder;
+			
+			inner.setAttr({
+				name : 'placeholder',
+				value : placeholder
+			});
+		};
 
 		EVENT({
 			node : self,
@@ -11531,12 +11561,12 @@ global.ENCRYPTION_REQUEST = METHOD({
 		
 		(method === 'GET' || method === 'DELETE' ? fetch(url + '?' + paramStr, {
 			method : method,
-			credentials : location.protocol !== 'file:' && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
+			credentials : location.protocol !== 'file:' && location.protocol.indexOf('-extension:') === -1 && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
 			headers : new Headers(headers === undefined ? {} : headers)
 		}) : fetch(url, {
 			method : method,
 			body : paramStr,
-			credentials : location.protocol !== 'file:' && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
+			credentials : location.protocol !== 'file:' && location.protocol.indexOf('-extension:') === -1 && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
 			headers : new Headers(headers === undefined ? {} : headers)
 		}))
 		.then((response) => {
@@ -12484,12 +12514,12 @@ global.REQUEST = METHOD({
 		
 		(method === 'GET' || method === 'DELETE' ? fetch(url.substring(0, 5) === 'data:' ? url : url + '?' + paramStr, {
 			method : method,
-			credentials : location.protocol !== 'file:' && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
+			credentials : location.protocol !== 'file:' && location.protocol.indexOf('-extension:') === -1 && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
 			headers : new Headers(headers === undefined ? {} : headers)
 		}) : fetch(url, {
 			method : method,
 			body : paramStr,
-			credentials : location.protocol !== 'file:' && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
+			credentials : location.protocol !== 'file:' && location.protocol.indexOf('-extension:') === -1 && host === BROWSER_CONFIG.host && port === BROWSER_CONFIG.port ? 'include' : undefined,
 			headers : new Headers(headers === undefined ? {} : headers)
 		}))
 		.then((response) => {
@@ -12574,8 +12604,8 @@ global.GO = METHOD((m) => {
 				
 				MATCH_VIEW.setURIData(data);
 				
-				// when protocol is 'file:', use hashbang.
-				if (location.protocol === 'file:') {
+				// when protocol is 'file:' or extension, use hashbang.
+				if (location.protocol === 'file:' || location.protocol.indexOf('-extension:') !== -1) {
 					location.href = HREF(uri);
 				} else {
 					history.pushState(undefined, undefined, HREF(uri));
@@ -12646,8 +12676,8 @@ global.HREF = METHOD({
 	run : (uri) => {
 		//REQUIRED: uri
 
-		// when protocol is 'file:', use hashbang.
-		if (location.protocol === 'file:') {
+		// when protocol is 'file:' or extension, use hashbang.
+		if (location.protocol === 'file:' || location.protocol.indexOf('-extension:') !== -1) {
 			return '#!/' + uri;
 		} else {
 			return '/' + uri;
@@ -12752,8 +12782,8 @@ global.MATCH_VIEW = METHOD((m) => {
 			
 			changeURIHandlers.push(changeURIHandler);
 			
-			// when protocol is 'file:', use hashbang.
-			if (location.protocol === 'file:') {
+			// when protocol is 'file:' or extension, use hashbang.
+			if (location.protocol === 'file:' || location.protocol.indexOf('-extension:') !== -1) {
 				EVENT('hashchange', () => {
 					changeURIHandler();
 				});
@@ -12846,8 +12876,8 @@ global.REFRESH = METHOD((m) => {
 		run : (uri) => {
 			//OPTIONAL: uri
 			
-			// when protocol is 'file:', use hashbang.
-			if (location.protocol === 'file:') {
+			// when protocol is 'file:' or extension, use hashbang.
+			if (location.protocol === 'file:' || location.protocol.indexOf('-extension:') !== -1) {
 				
 				let savedHash = uri !== undefined ? '#!/' + uri : location.hash;
 		
@@ -12901,8 +12931,8 @@ global.URI = METHOD({
 
 	run : () => {
 		
-		// when protocol is 'file:', use hashbang.
-		if (location.protocol === 'file:') {
+		// when protocol is 'file:' or extension, use hashbang.
+		if (location.protocol === 'file:' || location.protocol.indexOf('-extension:') !== -1) {
 			return location.hash.substring(3);
 		} else {
 			return decodeURIComponent(location.pathname.substring(1));

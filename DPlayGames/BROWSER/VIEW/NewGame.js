@@ -6,37 +6,55 @@ DPlayGames.NewGame = CLASS({
 
 	init : (inner, self) => {
 		
+		let gameURLInput;
 		let content = DIV({
 			style : {
 				paddingTop : 200,
 				margin : 'auto',
-				width : 500
+				width : 500,
+				color : '#979b9b'
 			},
 			c : [
 			FORM({
 				style : {
 					backgroundColor : 'rgba(0, 0, 0, 0.5)',
-					padding : 30
+					padding : 20
 				},
 				c : [
+				H1({
+					style : {
+						fontWeight : 'bold',
+						fontSize : 20,
+						textAlign : 'center'
+					},
+					c : MSG('CREATE_GAME_TITLE')
+				}),
+				
 				P({
-					c : '게임의 기본 정보를 입력해주세요. 게임의 이름과 소개는 게임 생성 후 상세 정보 입력에서 입력하실 수 있습니다.'
+					style : {
+						marginTop : 20
+					},
+					c : MSG('CREATE_GAME_DESCRIPTION')
 				}),
 				
 				UUI.FULL_INPUT({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						border : '1px solid #abacad',
+						backgroundColor : '#e6e2dd'
 					},
 					name : 'price',
-					placeholder : '게임 가격'
+					placeholder : MSG('GAME_PRICE_INPUT')
 				}),
 				
-				UUI.FULL_INPUT({
+				gameURLInput = UUI.FULL_INPUT({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						border : '1px solid #abacad',
+						backgroundColor : '#e6e2dd'
 					},
 					name : 'gameURL',
-					placeholder : '게임 다운로드 URL'
+					placeholder : MSG('GAME_DOWNLOAD_URL_INPUT')
 				}),
 				
 				UUI.FULL_CHECKBOX({
@@ -44,39 +62,66 @@ DPlayGames.NewGame = CLASS({
 						marginTop : 10
 					},
 					name : 'isWebGame',
-					label : '웹 게임인가요?'
-				}),
-				
-				P({
-					style : {
-						marginTop : 10
-					},
-					c : '웹 게임의 경우, 게임 다운로드 URL에 웹 게임의 주소를 입력해주세요.'
+					label : MSG('IS_WEB_GAME_CHECKBOX'),
+					on : {
+						change : (e, checkbox) => {
+							if (checkbox.getValue() === true) {
+								gameURLInput.setPlaceholder(MSG('GAME_PLAY_URL_INPUT'));
+							} else {
+								gameURLInput.setPlaceholder(MSG('GAME_DOWNLOAD_URL_INPUT'));
+							}
+						}
+					}
 				}),
 				
 				H5({
 					style : {
-						marginTop : 20
+						marginTop : 20,
+						fontWeight : 'bold'
 					},
-					c : '기본 언어'
+					c : MSG('GAME_BASE_LANG_INPUT')
 				}),
 				
 				UUI.FULL_SELECT({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						border : '1px solid #abacad',
+						backgroundColor : '#e6e2dd'
 					},
 					name : 'defaultLanguage',
-					options : [OPTION({
-						value : 'ko',
-						c : '한국어'
-					})]
+					value : INFO.getLang(),
+					options : RUN(() => {
+						
+						let options = [];
+						
+						EACH(DPlayGames.LANGS, (name, lang) => {
+							options.push(OPTION({
+								value : lang,
+								c : name
+							}));
+						});
+						
+						return options;
+					})
 				}),
 				
 				UUI.FULL_SUBMIT({
 					style : {
-						marginTop : 10
+						margin : 'auto',
+						marginTop : 20,
+						width : 330,
+						height : 33,
+						backgroundImage : '/DPlayGames/R/button.png',
+						textAlign : 'center',
+						cursor : 'pointer',
+						color : '#afada8',
+						fontWeight : 'bold',
+						backgroundColor : 'transparent'
 					},
-					value : '게임 생성'
+					inputStyle : {
+						padding : 0
+					},
+					value : MSG('CREATE_GAME_SUBMIT')
 				})],
 				on : {
 					submit : (e, form) => {

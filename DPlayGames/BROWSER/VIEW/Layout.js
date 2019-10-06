@@ -28,7 +28,7 @@ DPlayGames.Layout = CLASS((cls) => {
 						left : 25,
 						top : 30
 					},
-					c : A({
+					c : [A({
 						c : IMG({
 							style : {
 								width : 109
@@ -40,7 +40,14 @@ DPlayGames.Layout = CLASS((cls) => {
 								DPlayGames.GO('');
 							}
 						}
-					})
+					}), SPAN({
+						style : {
+							marginLeft : -22,
+							fontStyle : 'italic',
+							color : 'yellow'
+						},
+						c : 'alpha'
+					})]
 				}),
 				
 				contentWrapper = DIV({
@@ -81,27 +88,26 @@ DPlayGames.Layout = CLASS((cls) => {
 				}).appendTo(BODY);
 				
 				EACH([{
-					title : '내 게임',
+					title : MSG('MENU_MY_GAMES_BUTTON'),
 					uri : 'mygames'
 				}, {
-					title : '내 정보',
+					title : MSG('MENU_MY_INFO_BUTTON'),
 					uri : 'me'
 				}, {
-					title : '새 게임 등록',
+					title : MSG('MENU_NEW_GAME_BUTTON'),
 					uri : 'game/new'
 				}], (menuInfo, index) => {
 					
 					menu.append(LI({
 						style : {
-							border : '1px solid #666',
-							backgroundColor : '#333',
-							marginTop : -1
+							borderBottom : '1px solid #000',
+							backgroundColor : '#333'
 						},
 						c : A({
 							style : {
 								width : 150,
 								display : 'block',
-								padding : 10,
+								padding : 8,
 								textAlign : 'center'
 							},
 							c : menuInfo.title,

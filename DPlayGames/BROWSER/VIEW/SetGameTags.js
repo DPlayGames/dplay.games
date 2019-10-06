@@ -34,10 +34,20 @@ DPlayGames.SetGameTags = CLASS({
 						color : '#949191'
 					},
 					name : 'language',
-					options : [OPTION({
-						value : 'ko',
-						c : '한국어'
-					})]
+					value : INFO.getLang(),
+					options : RUN(() => {
+						
+						let options = [];
+						
+						EACH(DPlayGames.LANGS, (name, lang) => {
+							options.push(OPTION({
+								value : lang,
+								c : name
+							}));
+						});
+						
+						return options;
+					})
 				}), UUI.FULL_INPUT({
 					name : 'tag1',
 					placeholder : '태그'
@@ -60,18 +70,18 @@ DPlayGames.SetGameTags = CLASS({
 						
 						gameTagsData.gameId = gameId;
 						
-						/*DPlayStoreSearchContract.setGameTags(gameTagsData, () => {
+						DPlayStoreSearchContract.setGameTags(gameTagsData, () => {
 							
 							// 게임 정보 화면으로 이동
 							DPlayGames.GO('game/' + gameId);
-						});*/
+						});
 					}
 				}
 			}));
 			
 			let loadGameTags = (language) => {
 				
-				/*DPlayStoreSearchContract.getGameTags({
+				DPlayStoreSearchContract.getGameTags({
 					gameId : gameId,
 					language : INFO.getLang()
 				}, (tag1, tag2, tag3, tag4) => {
@@ -83,7 +93,7 @@ DPlayGames.SetGameTags = CLASS({
 						tag3 : tag3,
 						tag4 : tag4
 					});
-				});*/
+				});
 			};
 			
 			loadGameTags(INFO.getLang());

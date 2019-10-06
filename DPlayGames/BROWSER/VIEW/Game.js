@@ -197,12 +197,12 @@ DPlayGames.Game = CLASS({
 							CLEAR_BOTH()]
 						}));
 						
-						/*DPlayStoreSearchContract.getGameTags({
+						DPlayStoreSearchContract.getGameTags({
 							gameId : gameId,
 							language : language
 						}, (tag1, tag2, tag3, tag4) => {
 							console.log(tag1, tag2, tag3, tag4);
-						});*/
+						});
 					};
 				}])
 			});

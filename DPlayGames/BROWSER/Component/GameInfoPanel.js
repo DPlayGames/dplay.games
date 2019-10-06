@@ -94,7 +94,7 @@ DPlayGames.GameInfoPanel = CLASS({
 						})]
 					}));
 					
-					DPlayStoreContract.getOverallRating(gameId, (rating) => {
+					DPlayCriticContract.getOverallRating(gameId, (rating) => {
 						
 						ratingPanel.append(DIV({
 							style : {

@@ -37,10 +37,20 @@ DPlayGames.SetGameDetails = CLASS({
 						color : '#949191'
 					},
 					name : 'language',
-					options : [OPTION({
-						value : 'ko',
-						c : '한국어'
-					})]
+					value : INFO.getLang(),
+					options : RUN(() => {
+						
+						let options = [];
+						
+						EACH(DPlayGames.LANGS, (name, lang) => {
+							options.push(OPTION({
+								value : lang,
+								c : name
+							}));
+						});
+						
+						return options;
+					})
 				}),
 				
 				DIV({
