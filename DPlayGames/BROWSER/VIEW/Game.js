@@ -53,56 +53,119 @@ DPlayGames.Game = CLASS({
 						let menuPanel;
 						
 						content.append(menuPanel = DIV({
-							c : [
-							// 게임 세부 내용 수정 버튼
-							setGameDetailsButton = A({
-								style : {
-									flt : 'left'
-								},
-								c : '게임 세부 내용 수정',
-								on : {
-									tap : () => {
-										DPlayGames.GO('game/' + gameId + '/details');
-									}
-								}
-							}),
-							
-							// 게임 출시 버튼
-							releaseButton = A({
-								style : {
-									flt : 'right'
-								},
-								c : isReleased !== true ? '게임 출시' : '게임 출시 취소',
-								on : {
-									tap : () => {
-										
-										// 게임 출시
-										if (isReleased !== true) {
-											DPlayStoreContract.release(gameId, () => {
-												releaseButton.empty();
-												releaseButton.append('게임 출시 취소');
-											});
-										}
-										
-										// 게임 출시
-										else {
-											DPlayStoreContract.unrelease(gameId, () => {
-												releaseButton.empty();
-												releaseButton.append('게임 출시');
-											});
-										}
-									}
-								}
-							}),
-							
-							CLEAR_BOTH()]
 						}));
 						
-						menuPanel.hide();
-						
 						DPlayInventory.getAccountId((accountId) => {
+							
+							// 배포자인 경우
 							if (accountId === publisher) {
-								menuPanel.show();
+								
+								menuPanel.append(DIV({
+									c : [
+									// 게임 기본 정보 변경 버튼
+									A({
+										style : {
+											flt : 'left'
+										},
+										c : MSG('CHANGE_GAME_INFO_BUTTON'),
+										on : {
+											tap : () => {
+												DPlayGames.GO('game/' + gameId + '/changeinfo');
+											}
+										}
+									}),
+									
+									// 게임 가격 변경 버튼
+									A({
+										style : {
+											marginLeft : 10,
+											flt : 'left'
+										},
+										c : MSG('CHANGE_GAME_PRICE_BUTTON'),
+										on : {
+											tap : () => {
+												DPlayGames.GO('game/' + gameId + '/changeprice');
+											}
+										}
+									}),
+									
+									// 게임 세부 내용 수정 버튼
+									A({
+										style : {
+											marginLeft : 10,
+											flt : 'left'
+										},
+										c : MSG('UPDATE_GAME_LANG_DETAIL_BUTTON').replace(/{lang}/, DPlayGames.LANGS[language]),
+										on : {
+											tap : () => {
+												DPlayGames.GO('game/' + gameId + '/details');
+											}
+										}
+									}),
+									
+									// 게임 출시 버튼
+									releaseButton = A({
+										style : {
+											flt : 'right'
+										},
+										c : isReleased !== true ? '게임 출시' : '게임 출시 취소',
+										on : {
+											tap : () => {
+												
+												// 게임 출시
+												if (isReleased !== true) {
+													DPlayStoreContract.release(gameId, () => {
+														releaseButton.empty();
+														releaseButton.append('게임 출시 취소');
+													});
+												}
+												
+												// 게임 출시
+												else {
+													DPlayStoreContract.unrelease(gameId, () => {
+														releaseButton.empty();
+														releaseButton.append('게임 출시');
+													});
+												}
+											}
+										}
+									}),
+									
+									CLEAR_BOTH()]
+								}));
+							}
+							
+							// 배포자가 아닌 경우
+							else {
+								
+								menuPanel.append(DIV({
+									c : [
+									// 게임 구매 버튼
+									A({
+										style : {
+											flt : 'left'
+										},
+										c : MSG('BUY_GAME_BUTTON'),
+										on : {
+											tap : () => {
+												
+												DPlayGames.Confirm({
+													content : MSG('BUY_GAME_CONFIRM').replace(/{price}/, DPlayCoinContract.getDisplayPrice(price))
+												}, () => {
+													
+													DPlayStoreContract.buy(gameId, () => {
+														
+														DPlayGames.Alert({
+															content : MSG('BOUGHT_GAME_ALERT')
+														});
+													});
+												});
+											}
+										}
+									}),
+									
+									CLEAR_BOTH()]
+								}));
 							}
 						});
 						

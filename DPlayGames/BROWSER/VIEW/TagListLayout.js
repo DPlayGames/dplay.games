@@ -38,7 +38,7 @@ DPlayGames.TagListLayout = CLASS((cls) => {
 							left : 25,
 							top : 30
 						},
-						c : A({
+						c : [A({
 							c : IMG({
 								style : {
 									width : 109
@@ -50,7 +50,14 @@ DPlayGames.TagListLayout = CLASS((cls) => {
 									DPlayGames.GO('');
 								}
 							}
-						})
+						}), SPAN({
+							style : {
+								marginLeft : -22,
+								fontStyle : 'italic',
+								color : 'yellow'
+							},
+							c : 'alpha'
+						})]
 					}),
 					
 					tagList = UL({
@@ -65,7 +72,7 @@ DPlayGames.TagListLayout = CLASS((cls) => {
 								fontWeight : 'bold',
 								color : '#c40000'
 							},
-							c : '태그'
+							c : MSG('TAG_LIST_TITLE')
 						})]
 					})]
 				}),
@@ -78,25 +85,7 @@ DPlayGames.TagListLayout = CLASS((cls) => {
 			});
 			
 			[
-				'전체',
-				'전략 시뮬레이션',
-				'FPS',
-				'고양이',
-				'스포츠',
-				'시뮬레이션',
-				'레이싱',
-				'인디',
-				'캐주얼',
-				'MMORPG',
-				'시뮬레이션',
-				'FPS',
-				'고양이',
-				'스포츠',
-				'시뮬레이션',
-				'레이싱',
-				'인디',
-				'캐주얼',
-				'RPG'
+				
 			].forEach((tag) => {
 				
 				tagList.append(LI({

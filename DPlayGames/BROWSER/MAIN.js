@@ -47,6 +47,16 @@ DPlayGames.MAIN = METHOD({
 			});
 			
 			DPlayGames.MATCH_VIEW({
+				uri : 'game/{gameId}/changeprice',
+				target : DPlayGames.ChangeGamePrice
+			});
+			
+			DPlayGames.MATCH_VIEW({
+				uri : 'game/{gameId}/changeinfo',
+				target : DPlayGames.ChangeGameInfo
+			});
+			
+			DPlayGames.MATCH_VIEW({
 				uri : 'game/{gameId}/details',
 				target : DPlayGames.SetGameDetails
 			});
