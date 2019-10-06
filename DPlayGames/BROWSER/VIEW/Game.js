@@ -100,8 +100,8 @@ DPlayGames.Game = CLASS({
 						
 						menuPanel.hide();
 						
-						SmartContract.getWalletAddress((walletAddress) => {
-							if (walletAddress === publisher) {
+						DPlayInventory.getAccountId((accountId) => {
+							if (accountId === publisher) {
 								menuPanel.show();
 							}
 						});

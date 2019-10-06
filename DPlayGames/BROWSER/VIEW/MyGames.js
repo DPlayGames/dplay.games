@@ -18,9 +18,12 @@ DPlayGames.MyGames = CLASS({
 		
 		NEXT([
 		(next) => {
-			SmartContract.checkWalletLocked((isLocked) => {
-				if (isLocked === true) {
-					SmartContract.enableWallet(next);
+			
+			DPlayInventory.getAccountId((accountId) => {
+				
+				// 계정 ID를 가져오지 못하면 로그인이 되어있지 않은 경우
+				if (accountId === undefined) {
+					DPlayInventory.login(next);
 				} else {
 					next();
 				}
@@ -29,7 +32,7 @@ DPlayGames.MyGames = CLASS({
 		
 		(next) => {
 			return () => {
-				SmartContract.getWalletAddress(next);
+				DPlayInventory.getAccountId(next);
 			};
 		},
 		

@@ -88,10 +88,10 @@ DPlayGames.NewGame = CLASS({
 						
 						DPlayStoreContract.newGame(gameData, () => {
 							
-							SmartContract.getWalletAddress((walletAddress) => {
+							DPlayInventory.getAccountId((accountId) => {
 								
 								// 가장 최신의 게임 ID를 가져옵니다.
-								DPlayStoreContract.getPublishedGameIds(walletAddress, (gameIds) => {
+								DPlayStoreContract.getPublishedGameIds(accountId, (gameIds) => {
 									
 									// 게임 정보 화면으로 이동
 									DPlayGames.GO('game/' + gameIds[gameIds.length - 1]);
