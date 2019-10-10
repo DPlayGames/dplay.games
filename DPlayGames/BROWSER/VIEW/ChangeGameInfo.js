@@ -152,7 +152,7 @@ DPlayGames.ChangeGameInfo = CLASS({
 							content : MSG('TRANSFER_TARGET_ACCOUNT_ID_INPUT')
 						}, (to) => {
 							
-							DPlayStoreContract.transferGame({
+							DPlayStoreContract.transfer({
 								to : to,
 								gameId : gameId
 							}, () => {
